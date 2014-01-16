@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Sphero</title>
+	<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+	<style>
+		#wrapper { 
+			width: 800px;
+			height: 600px;
+		}
+		#forward, #back, #left, #right, #stop {
+			height: 100px;
+			width: 100px;
+			background: blue;
+			color: white;
+			text-align: center;
+			line-height: 100px;
+			display:block;
+		}
+		#forward, #back, #stop {
+			margin: 100px auto;
+		}
+		#stop {
+			margin-top: -200px; /* HACH */
+		}
+		#lr {
+			margin: 100px 0;
+			height: 100px;
+		}
+		#left {
+			float: left;
+		}
+		#right {
+			float: right;
+		}
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+		<input id="color" />&nbsp;&nbsp;<button id="color">COLOR</button><br/>
+		<input id="hex" />&nbsp;&nbsp;<button id="hex">HEX</button><br/>
+		<div>
+			<button id="forward">FORWARD</button>
+		</div>
+		<div id="lr">
+			<button id="left">LEFT</button>
+			<button id="right">RIGHT</button>
+		</div>
+		<button id="stop">STOP</button>
+		<button id="back">BACK</button>
+	</div>
+</body>
+<script>
+	$(document).ready(function() {
+		$("#forward").on("click", function() {
+			console.log("forward");
+			$.get("http://localhost:3001/roll/0");
+		});
+		$("#left").on("click", function() {
+			$.get("http://localhost:3001/roll/90");
+		});
+		$("#right").on("click", function() {
+			$.get("http://localhost:3001/roll/270");
+		});
+		$("#back").on("click", function() {
+			$.get("http://localhost:3001/roll/180");
+		});
+		$("#stop").on("click", function() {
+			$.get("http://localhost:3001/stop");
+		});
+		$("#color").on("change", function(e) {
+			var val = $(e.currentTarget).val();
+			if (val) {
+				$.get("http://localhost:3001/color/"+val);
+			}
+		});
+		$("#hex").on("change", function(e) {
+			var val = $(e.currentTarget).val();
+			if (val) {
+				$.get("http://localhost:3001/hex/"+val);
+			}
+		});
+	});
+</script>
+</html>

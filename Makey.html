@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body ng-app="spheroApp" ng-controller="spheroController">
+    <input ng-model="message" ng-enter="" wkey="wKey()"
+           dkey="dKey()"
+           skey="sKey()"
+           dkey="dKey()"
+           fkey="fKey()"
+           gkey="gKey()"
+           downkey="downKey()"
+           upkey="upKey()"
+           rightkey="rightKey()"
+           leftkey="leftKey()"
+           spacekey="spaceKey()"
+           ng-click="doClick()" />
+
+
+    {{message}}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+
+    <script>
+
+        var app = angular.module("spheroApp", []);
+
+        app.controller('spheroController', function ($http, $scope) {
+
+            var call = function (cmd) {
+                $http({method: 'GET', url: cmd}).
+                    success(function(data, status, headers, config) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                    }).
+                    error(function(data, status, headers, config) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                    });
+
+            };
+           
+
+            $scope.wKey = function () {
+                //alert("w");
+                call('color/orange');
+            }
+            $scope.dKey = function () {
+                //alert("d");
+                call('color/blue');
+            }
+            $scope.sKey = function () {
+                //alert("s");
+                call('color/red');
+            }
+            $scope.fKey = function () {
+                //alert("f");
+                call('color/green');
+            }
+            $scope.gKey = function () {
+                //alert("g");
+                call('color/purple');
+            }
+            $scope.leftKey = function () {
+                //alert("left");
+                call('roll/270');
+            }
+            $scope.rightKey = function () {
+                //alert("right");
+                call('roll/90');
+            }
+            $scope.upKey = function () {
+                //alert("up");
+                call('roll/0');
+            }
+            $scope.downKey = function () {
+                //alert("down");
+                call('roll/180');
+            }
+
+            $scope.spaceKey = function () {
+                //alert("space");
+                call('/stop');
+            }
+
+            $scope.doClick = function () {
+                //alert("click");
+                call('/stop');
+            }
+
+        })
+
+        app.directive('ngEnter', function () {
+            return function (scope, element, attrs) {
+                element.bind("keydown keypress", function (event) {
+                    switch (event.which) {
+
+                        case 37:
+                            scope.$apply(function () {
+                                scope.$eval(attrs.leftkey);
+                            });
+                            break;
+                        case 38:
+                            scope.$apply(function () {
+                                scope.$eval(attrs.upkey);
+                            });
+                            break;
+                        case 39:
+                            scope.$apply(function () {
+                                scope.$eval(attrs.rightkey);
+                            });
+                            break;
+                        case 40:
+                            scope.$apply(function () {
+                                scope.$eval(attrs.downkey);
+                            });
+                            break;
+                        case 87:
+                            scope.$apply(function () {
+                                scope.$eval(attrs.wkey);
+                            });
+                            break;
+                        case 65:
+                            scope.$apply(function () {
+                                scope.$eval(attrs.dkey);
+                            });
+                            break;
+                        case 83:
+                            scope.$apply(function () {
+                                scope.$eval(attrs.skey);
+                            });
+                            break;
+                        case 68:
+                            scope.$apply(function () {
+                                scope.$eval(attrs.dkey);
+                            });
+                            break;
+                        case 70:
+                            scope.$apply(function () {
+                                scope.$eval(attrs.fkey);
+                            });
+                            break;
+                        case 71:
+                            scope.$apply(function () {
+                                scope.$eval(attrs.gkey);
+                            });
+                            break;
+                        case 32:
+                            scope.$apply(function () {
+                                scope.$eval(attrs.spacekey);
+                            });
+                            break;
+                    }
+
+                    event.preventDefault();
+                
+                });
+        };
+        });
+    </script>
+
+
+</body>
+</html>
